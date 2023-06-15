@@ -1,0 +1,33 @@
+﻿@model List<CarrosModeloModel>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>This is about page!</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Ano</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var carroModelo in Model)
+        {
+            <tr>
+                <th scope="row">@carroModelo.Id</th>
+                <td>@carroModelo.Modelo</td>
+                <td>@carroModelo.Marca</td>
+                <td>@carroModelo.Ano</td>
+                <td><button>Editar</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
