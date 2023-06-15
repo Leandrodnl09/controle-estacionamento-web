@@ -36,6 +36,21 @@ namespace controle.estacionamento.web.Controllers
         {
             return View();
         }
+        
+        public async Task<IActionResult> AboutAsync()
+        {
+            var path = "api/modelos";
+
+            var messageRequest = new HttpRequestMessage(HttpMethod.Get, path);
+
+            var response = await _httpClient.SendAsync(messageRequest);
+
+            var jsonContent = await response.Content.ReadAsStringAsync();
+
+            var carrosModel = JsonSerializer.Deserialize<List<CarrosModeloModel>>(jsonContent);
+
+            return View(carrosModel);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
