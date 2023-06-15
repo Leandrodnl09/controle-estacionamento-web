@@ -1,21 +1,35 @@
 ﻿using controle.estacionamento.web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace controle.estacionamento.web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        HttpClient _httpClient;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri("https://localhost:7062");
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            string path = "api/modelos";
+
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, path);
+
+            var response = await _httpClient.SendAsync(httpRequest);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var carrosModelos = JsonSerializer.Deserialize<List<CarrosModeloModel>>(content);
+
+            return View(carrosModelos);
         }
 
         public IActionResult Privacy()
