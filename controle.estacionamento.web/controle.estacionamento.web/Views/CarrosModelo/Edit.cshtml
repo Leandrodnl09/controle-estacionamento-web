@@ -1,0 +1,35 @@
+﻿@model CarrosModeloModel
+
+<div class="col-lg-8">
+    <div class="card">
+        <div class="card-header">
+            <strong>Editar</strong>
+        </div>
+        <div class="card-body card-block">
+            <form action="@Url.Action("Edit","CarrosModelo")" method="post" class="">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="form-group">
+                    <label for="modelo" class="form-control-label">Modelo</label>
+                    <input type="text" id="modelo" name="modelo" placeholder="Modelo do carro..." class="form-control" value="@Model.Modelo">
+                </div>
+                <div class="form-group">
+                    <label for="marca" class="form-control-label">Marca</label>
+                    <input type="text" id="marca" name="marca" placeholder="Marca do carro..." class="form-control" value="@Model.Marca">
+                </div>
+                <div class="form-group">
+                    <label for="ano" class="form-control-label">Ano de lançamento</label>
+                    <input type="number" id="ano" name="ano" placeholder="Ex: 2019" class="form-control" value="@Model.Ano">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Salvar
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+</div>
