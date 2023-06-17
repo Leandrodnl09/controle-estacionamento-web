@@ -61,9 +61,28 @@ namespace controle.estacionamento.web.Controllers
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var controlePermanencia = JsonSerializer.Deserialize<CarrosModeloModel>(content);
+            var controlePermanencia = JsonSerializer.Deserialize<ControlePermanenciaCarrosModel>(content);
 
             return View(controlePermanencia);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ControlePermanenciaCarrosModel controlePermanencia)
+        {
+            var path = $"api/controlepermanencia/{controlePermanencia.Id}";
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var messageRequest = new HttpRequestMessage(HttpMethod.Put, path)
+            {
+                Content = JsonContent.Create(controlePermanencia)
+            };
+
+            var response = await _httpClient.SendAsync(messageRequest);
+
+            response.EnsureSuccessStatusCode();
+
+            return RedirectToAction("Index");
         }
     }
 }
