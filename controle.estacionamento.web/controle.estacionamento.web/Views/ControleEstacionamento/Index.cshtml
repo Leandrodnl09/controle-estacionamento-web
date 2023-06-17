@@ -1,0 +1,69 @@
+﻿@model List<ControlePermanenciaCarrosModel>
+
+<div class="col-lg-8">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Modelos</strong>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Placa</th>
+                        <th scope="col">IdModelo</th>
+                        <th scope="col">DataHoraEntrada</th>
+                        <th scope="col">DataHoraSaida</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var modelo in Model)
+                    {
+                        <tr>
+                            <th scope="row">@modelo.Id</th>
+                            <td>@modelo.Placa</td>
+                            <td>@modelo.IdModelo</td>
+                            <td>@modelo.DataHoraEntrada</td>
+                            <td>@(modelo.DataHoraSaida==null?"Em aberto" : modelo.DataHoraSaida)</td>
+                            <td><a href="@Url.ActionLink("Edit", "ControlePermanencia", new { id = modelo.Id })" class="btn btn-primary btn-sm">Editar</a> | <a href="@Url.ActionLink("Delete", "CarrosModelo", new { id = modelo.Id })" class="btn btn-danger btn-sm">Deletar</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="card">
+        <div class="card-header">
+            <strong>Novo Modelo</strong>
+        </div>
+        <div class="card-body card-block">
+            <form action="@Url.Action("Create","ControlePermanencia")" method="post" class="">
+                <div class="form-group">
+                    <label for="modelo" class="form-control-label">Modelo</label>
+                    <input type="text" id="modelo" name="modelo" placeholder="Modelo do carro..." class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="marca" class="form-control-label">Marca</label>
+                    <input type="text" id="marca" name="marca" placeholder="Marca do carro..." class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="ano" class="form-control-label">Ano de lançamento</label>
+                    <input type="number" id="ano" name="ano" placeholder="Ex: 2019" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Cadastrar
+                    </button>
+                    <button type="reset" class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+</div> menu</h1>
