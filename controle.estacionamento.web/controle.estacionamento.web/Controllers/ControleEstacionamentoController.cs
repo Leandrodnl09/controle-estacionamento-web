@@ -84,5 +84,20 @@ namespace controle.estacionamento.web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var path = $"api/controlepermanencia/{id}";
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var messageRequest = new HttpRequestMessage(HttpMethod.Delete, path);
+
+            var response = await _httpClient.SendAsync(messageRequest);
+
+            response.EnsureSuccessStatusCode();
+
+            return RedirectToAction("Index");
+        }
     }
 }
