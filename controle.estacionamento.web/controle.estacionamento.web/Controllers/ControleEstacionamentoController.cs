@@ -35,7 +35,7 @@ namespace controle.estacionamento.web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(ControlePermanenciaCarrosModel model)
         {
-            var path = "api/modelos";
+            var path = "api/controlepermanencia";
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -49,6 +49,21 @@ namespace controle.estacionamento.web.Controllers
             response.EnsureSuccessStatusCode();
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var path = $"api/controlepermanencia/{id}";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, path);
+
+            var response = await _httpClient.SendAsync(request);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var controlePermanencia = JsonSerializer.Deserialize<CarrosModeloModel>(content);
+
+            return View(controlePermanencia);
         }
     }
 }
