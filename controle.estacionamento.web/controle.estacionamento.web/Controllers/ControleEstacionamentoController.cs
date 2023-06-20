@@ -29,6 +29,20 @@ namespace controle.estacionamento.web.Controllers
 
             var controlePermanencia = JsonSerializer.Deserialize<List<ControlePermanenciaCarrosModel>>(content);
 
+            var pathCarrosModelos = "api/modelos";
+
+            var requestModelos = new HttpRequestMessage(HttpMethod.Get, pathCarrosModelos);
+
+            var responseModelos = await _httpClient.SendAsync(requestModelos);
+
+            responseModelos.EnsureSuccessStatusCode();
+
+            var contentModelos = await responseModelos.Content.ReadAsStringAsync();
+
+            var modelos = JsonSerializer.Deserialize<List<CarrosModeloModel>>(contentModelos);
+
+            ViewData["Modelo"] = modelos;
+
             return View(controlePermanencia);
         }
 
@@ -92,6 +106,21 @@ namespace controle.estacionamento.web.Controllers
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             var messageRequest = new HttpRequestMessage(HttpMethod.Delete, path);
+
+            var response = await _httpClient.SendAsync(messageRequest);
+
+            response.EnsureSuccessStatusCode();
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Close(int id)
+        {
+            var path = $"/finalizarpermanencia/{id}";
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var messageRequest = new HttpRequestMessage(HttpMethod.Put, path);
 
             var response = await _httpClient.SendAsync(messageRequest);
 

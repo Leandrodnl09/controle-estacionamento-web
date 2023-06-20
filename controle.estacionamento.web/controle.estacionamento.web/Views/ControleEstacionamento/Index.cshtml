@@ -11,9 +11,10 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Placa</th>
-                        <th scope="col">IdModelo</th>
-                        <th scope="col">DataHoraEntrada</th>
-                        <th scope="col">DataHoraSaida</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Entrada</th>
+                        <th scope="col">Saida</th>
+                        <th scope="col">Valor</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -26,7 +27,17 @@
                             <td>@modelo.IdModelo</td>
                             <td>@modelo.DataHoraEntrada</td>
                             <td>@(modelo.DataHoraSaida==null?"Em aberto" : modelo.DataHoraSaida)</td>
-                            <td><a href="@Url.ActionLink("Edit", "ControlePermanencia", new { id = modelo.Id })" class="btn btn-primary btn-sm">Editar</a> | <a href="@Url.ActionLink("Delete", "CarrosModelo", new { id = modelo.Id })" class="btn btn-danger btn-sm">Deletar</a></td>
+                            <td>Teste</td>
+                            <td>
+                                @if (modelo.DataHoraSaida == null)
+                                {
+                                    <a href="@Url.ActionLink("Close", "ControleEstacionamento", new { id = modelo.Id })" class="btn btn-primary btn-sm">Finalizar</a>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary btn-sm" disabled>Finalizar</button>
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -37,21 +48,30 @@
 <div class="col-lg-4">
     <div class="card">
         <div class="card-header">
-            <strong>Novo Modelo</strong>
+            <strong>Nova Entrada</strong>
         </div>
         <div class="card-body card-block">
-            <form action="@Url.Action("Create","ControlePermanencia")" method="post" class="">
+            <form action="@Url.Action("Create","ControleEstacionamento")" method="post" class="">
                 <div class="form-group">
-                    <label for="modelo" class="form-control-label">Modelo</label>
-                    <input type="text" id="modelo" name="modelo" placeholder="Modelo do carro..." class="form-control">
+                    <label for="modelo" class="form-control-label">Placa</label>
+                    <input type="text" id="placa" name="placa" placeholder="Placa do carro..." class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="marca" class="form-control-label">Marca</label>
-                    <input type="text" id="marca" name="marca" placeholder="Marca do carro..." class="form-control">
+                    <label for="marca" class="form-control-label">Modelo</label>
+                        <select class="form-control" name="idModelo" id="idModelo">
+                        @{
+                            var modelos = (List<CarrosModeloModel>)ViewData["Modelo"];
+                            foreach (var item in modelos)
+                            {
+                                <option value="@item.Id">@item.Modelo</option>
+                            }
+                        }
+                       </select>
+
                 </div>
                 <div class="form-group">
-                    <label for="ano" class="form-control-label">Ano de lançamento</label>
-                    <input type="number" id="ano" name="ano" placeholder="Ex: 2019" class="form-control">
+                    <label for="ano" class="form-control-label">DataHoraEntrada</label>
+                    <input type="datetime" id="dataHoraEntrada" name="dataHoraEntrada" placeholder="Data e hora de entrada" class="form-control">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-sm">
@@ -66,4 +86,4 @@
         <div class="card-footer">
         </div>
     </div>
-</div> menu</h1>
+</div>
