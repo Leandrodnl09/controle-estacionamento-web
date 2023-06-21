@@ -19,6 +19,10 @@ namespace controle.estacionamento.web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (!HttpContext.User.Identity.IsAuthenticated) // login
+            {
+                return RedirectToAction("Login");               
+            }
             string path = "api/modelos";
 
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, path);
@@ -37,6 +41,15 @@ namespace controle.estacionamento.web.Controllers
             return View();
         }
         
+        public IActionResult Login() // login
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> LoginAsync(LoginModel model)
+        {
+
+        }
         public async Task<IActionResult> AboutAsync()
         {
             var path = "api/modelos";
