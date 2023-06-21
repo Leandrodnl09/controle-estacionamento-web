@@ -49,6 +49,7 @@ namespace controle.estacionamento.web.Controllers
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> LoginAsync(LoginModel model) // Login
         {
             if (model.Username == "lele" &&  model.Password == "12345")
