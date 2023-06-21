@@ -1,6 +1,9 @@
 ﻿using controle.estacionamento.web.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace controle.estacionamento.web.Controllers
@@ -46,10 +49,40 @@ namespace controle.estacionamento.web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> LoginAsync(LoginModel model)
+        public async Task<IActionResult> LoginAsync(LoginModel model) // Login
         {
+            if (model.Username == "lele" &&  model.Password == "12345")
+            {
+                // Defina pelo menos um conjunto de claims
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Role, "Administrador"),
+                };
 
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                };
+
+                // Logando
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties
+                );
+                return RedirectToAction("Index");
+            }
+            return View();
         }
+
+        public async Task<IActionResult> LogOutAsync()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> AboutAsync()
         {
             var path = "api/modelos";
