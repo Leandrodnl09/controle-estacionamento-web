@@ -6,3 +6,14 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@{
+    if (Context.User.Identity.IsAuthenticated)
+    {
+        <h1>@Context.User.Identity.Name esta logado!</h1>
+    }
+    else
+    {
+        <h1>Não há nenhum usuário logado!</h1>
+    }
+}
