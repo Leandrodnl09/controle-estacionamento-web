@@ -1,5 +1,6 @@
 ﻿@model List<ControlePermanenciaCarrosModel>
 
+
 <div class="col-lg-8">
     <div class="card">
         <div class="card-header">
@@ -27,7 +28,23 @@
                             <td>@modelo.IdModelo</td>
                             <td>@modelo.DataHoraEntrada</td>
                             <td>@(modelo.DataHoraSaida==null?"Em aberto" : modelo.DataHoraSaida)</td>
-                            <td>Teste</td>
+                            <td>
+                                @if(modelo.DataHoraSaida != null)
+                                {
+                                    var horas = (modelo.DataHoraSaida - modelo.DataHoraEntrada).Value.TotalHours;
+                                    if (horas <= 0.59)
+                                    {
+                                        horas = 1.00;
+                                        modelo.Valor = horas * 5.00;
+                                    }
+                                    else
+                                    {
+                                        horas = Math.Ceiling(horas);
+                                        modelo.Valor = horas * 5.00;
+                                    }
+                                }
+                                @String.Format("{0:C}", modelo.Valor)
+                            </td>
                             <td>
                                 @if (modelo.DataHoraSaida == null)
                                 {
@@ -84,6 +101,28 @@
             </form>
         </div>
         <div class="card-footer">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-lg-4">
+    <div class="card">
+        <div class="card-header">
+            <strong>Detalhes do Último Pagamento</strong>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Tempo de Permanência</th>
+                        <th scope="col">Valor a Pagar</th>
+                    </tr>
+                </thead>
+                <tbody id="detalhes-pagamento">
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

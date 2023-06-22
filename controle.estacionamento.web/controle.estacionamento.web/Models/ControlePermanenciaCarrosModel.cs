@@ -14,5 +14,6 @@ namespace controle.estacionamento.web.Models
         public DateTime DataHoraEntrada { get; set; }
         [JsonPropertyName("dataHoraSaida")]
         public DateTime? DataHoraSaida { get; set; }
+        public double Valor { get; set; }   
     }
 }

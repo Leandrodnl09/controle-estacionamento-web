@@ -126,7 +126,11 @@ namespace controle.estacionamento.web.Controllers
 
             response.EnsureSuccessStatusCode();
 
+            var content = await response.Content.ReadAsStringAsync();
+
             return RedirectToAction("Index");
         }
+
+
     }
 }
