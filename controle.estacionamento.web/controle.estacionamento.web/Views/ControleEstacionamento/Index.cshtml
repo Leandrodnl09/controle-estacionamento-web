@@ -1,7 +1,7 @@
 ﻿@model List<ControlePermanenciaCarrosModel>
 
 
-<div class="col-lg-8">
+<div class="col-lg-9">
     <div class="card">
         <div class="card-header">
             <strong class="card-title">Controle Permanência</strong>
@@ -17,7 +17,7 @@
                         <th scope="col">Saida</th>
                         <th scope="col">Valor</th>
                         <th scope="col"></th>
-                    </tr>
+                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var modelo in Model)
@@ -45,16 +45,19 @@
                                 }
                                 @String.Format("{0:C}", modelo.Valor)
                             </td>
-                            <td>
+                            <td class="d-flex">
                                 @if (modelo.DataHoraSaida == null)
                                 {
-                                    <a href="@Url.ActionLink("Close", "ControleEstacionamento", new { id = modelo.Id })" class="btn btn-primary btn-sm">Finalizar</a>
+                                    <a href="@Url.ActionLink("Close", "ControleEstacionamento", new { id = modelo.Id })" class="btn btn-danger btn-sm mr-2">Finalizar</a>
+                                    <span class="button-separator mr-2">|</span>
+                                    <button class="btn btn-primary btn-sm" onclick="imprimir('@modelo.Id')">Imprimir</button>
                                 }
                                 else
                                 {
-                                    <button class="btn btn-primary btn-sm" disabled>Finalizar</button>
-                                }
-                            <button class="btn btn-primary btn-sm" onclick="imprimir('@modelo.Id')">Imprimir</button>
+                                    <button class="btn btn-danger btn-sm mr-2" disabled>Finalizar</button>
+                                    <span class="button-separator mr-2">|</span>
+                                    <button class="btn btn-primary btn-sm" onclick="imprimir('@modelo.Id')">Imprimir</button>
+                                }                            
                             </td>
 
                             <div id="infoModelo-@modelo.Id" style="display: none;">
@@ -109,7 +112,7 @@
         </div>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3">
     <div class="card">
         <div class="card-header">
             <strong>Nova Entrada</strong>

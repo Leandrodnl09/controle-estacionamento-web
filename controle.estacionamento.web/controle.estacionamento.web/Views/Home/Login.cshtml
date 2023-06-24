@@ -70,6 +70,26 @@
     <script src="~/assets/js/main.js"></script>
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Evita o envio do formulário
+
+                var username = form.querySelector('input[name="username"]').value;
+                var password = form.querySelector('input[name="password"]').value;
+
+                if (username === '' || password === '') {
+                    alert('Por favor, preencha todos os campos!');
+                } else if (username !== 'lele' || password !== '12345') {
+                    alert('Usuário ou senha incorretos!');
+                } else {
+                    form.submit(); // Envie o formulário se os campos estiverem corretos
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
