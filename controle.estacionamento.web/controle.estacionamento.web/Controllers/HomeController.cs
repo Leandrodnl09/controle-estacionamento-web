@@ -81,7 +81,7 @@ namespace controle.estacionamento.web.Controllers
         public async Task<IActionResult> LogOutAsync()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
         public async Task<IActionResult> AboutAsync()
