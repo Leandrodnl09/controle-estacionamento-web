@@ -30,14 +30,9 @@
     <link rel="stylesheet" href="~/assets/css/style.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
-
-
 </head>
 
 <body class="bg-dark">
-
-
     <div class="sufee-login d-flex align-content-center flex-wrap">
         <div class="container">
             <div class="login-content">
@@ -63,12 +58,10 @@
         </div>
     </div>
 
-
     <script src="~/vendors/jquery/dist/jquery.min.js"></script>
     <script src="~/vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/assets/js/main.js"></script>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -79,11 +72,16 @@
                 var username = form.querySelector('input[name="username"]').value;
                 var password = form.querySelector('input[name="password"]').value;
 
-                if (username === '' || password === '') {
+                if (username === '' || password === '')
+                {
                     alert('Por favor, preencha todos os campos!');
-                } else if (username !== 'lele' || password !== '12345') {
+                } 
+                else if (username !== 'lele' || password !== '12345') 
+                {
                     alert('Usuário ou senha incorretos!');
-                } else {
+                } 
+                else 
+                {
                     form.submit(); // Envie o formulário se os campos estiverem corretos
                 }
             });

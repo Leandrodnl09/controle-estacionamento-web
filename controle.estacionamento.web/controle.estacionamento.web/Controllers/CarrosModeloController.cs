@@ -89,18 +89,26 @@ namespace BaseControleEstacionamentoWeb.Controllers
         }
 
         public async Task<IActionResult> Delete(int id)
-        {
-            var path = $"api/modelos/{id}";
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        {   
+            // pesquisar o restante do codigo
+            try
+            {
+                var path = $"api/modelos/{id}";
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var messageRequest = new HttpRequestMessage(HttpMethod.Delete, path);
+                var messageRequest = new HttpRequestMessage(HttpMethod.Delete, path);
 
-            var response = await _httpClient.SendAsync(messageRequest);
+                var response = await _httpClient.SendAsync(messageRequest);
 
-            response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", new { Message = "NOk", TextMessage = $"Erro ao deletar o modelo" });
+            }
         }
     }
 }
