@@ -74,6 +74,7 @@ else if (alertError)
                                 }
                                 @String.Format("{0:C}", modelo.Valor)
                             </td>
+                            <div id="scriptContainer" style="display: none;">
                             <td class="d-flex">
                                 @if (modelo.DataHoraSaida == null)
                                 {
@@ -88,6 +89,7 @@ else if (alertError)
                                     <button class="btn btn-primary btn-sm" onclick="imprimir('@modelo.Id')">Imprimir</button>
                                 }
                             </td>
+                            </div>
 
                             <div id="infoModelo-@modelo.Id" style="display: none;">
                                 <p>Placa: @modelo.Placa</p>

@@ -39,20 +39,28 @@ namespace BaseControleEstacionamentoWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CarrosModeloModel model)
         {
-            var path = "api/modelos";
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var messageRequest = new HttpRequestMessage(HttpMethod.Post, path)
+            try
             {
-                Content = JsonContent.Create(model)
-            };
+                var path = "api/modelos";
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await _httpClient.SendAsync(messageRequest);
+                var messageRequest = new HttpRequestMessage(HttpMethod.Post, path)
+                {
+                    Content = JsonContent.Create(model)
+                };
 
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.SendAsync(messageRequest);
 
-            return RedirectToAction("Index");
+                response.EnsureSuccessStatusCode();
+
+                return RedirectToAction("Index", new { Message = "Ok" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", new { Message = "NOk" });
+            }
+
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -73,20 +81,28 @@ namespace BaseControleEstacionamentoWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CarrosModeloModel model)
         {
-            var path = $"api/modelos/{model.Id}";
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var messageRequest = new HttpRequestMessage(HttpMethod.Put, path)
+            try
             {
-                Content = JsonContent.Create(model)
-            };
+                var path = $"api/modelos/{model.Id}";
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await _httpClient.SendAsync(messageRequest);
+                var messageRequest = new HttpRequestMessage(HttpMethod.Put, path)
+                {
+                    Content = JsonContent.Create(model)
+                };
 
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.SendAsync(messageRequest);
 
-            return RedirectToAction("Index");
+                response.EnsureSuccessStatusCode();
+
+                return RedirectToAction("Index", new { Message = "Ok" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", new { Message = "NOk" });
+            }
+
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -104,7 +120,7 @@ namespace BaseControleEstacionamentoWeb.Controllers
 
                 response.EnsureSuccessStatusCode();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Message = "Ok" });
             }
             catch (Exception)
             {

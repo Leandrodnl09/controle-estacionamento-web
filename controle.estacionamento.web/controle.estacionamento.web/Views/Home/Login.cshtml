@@ -63,7 +63,7 @@
     <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/assets/js/main.js"></script>
 
-    <script>
+    @*@<script>
         document.addEventListener('DOMContentLoaded', function () {
             var form = document.querySelector('form');
             form.addEventListener('submit', function (event) {
@@ -76,7 +76,7 @@
                 {
                     alert('Por favor, preencha todos os campos!');
                 } 
-                else if (username !== 'lele' || password !== '12345') 
+                else if (username !== '<%= user %>' || password !== '<%= pass %>') 
                 {
                     alert('Usuário ou senha incorretos!');
                 } 
@@ -86,7 +86,7 @@
                 }
             });
         });
-    </script>
+    </script>*@
 
 </body>
 
