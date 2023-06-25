@@ -1,5 +1,34 @@
 ﻿@model List<ControlePermanenciaCarrosModel>
 
+@{
+    var modelos = (List<CarrosModeloModel>)ViewData["Modelo"];
+
+    var parametro = Context.Request.Query["Message"].ToString();
+
+    var alertSucces = parametro == "Ok";
+    var alertError = parametro == "NOk";
+}
+
+@if (alertSucces)
+{
+    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+        <span class="badge badge-pill badge-success">Success</span>
+        Realizado com sucesso!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}
+else if (alertError)
+{
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+        <span class="badge badge-pill badge-danger">Error</span>
+        Erro ao salvar!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}
 
 <div class="col-lg-9">
     <div class="card">
@@ -17,15 +46,15 @@
                         <th scope="col">Saida</th>
                         <th scope="col">Valor</th>
                         <th scope="col"></th>
-                     </tr>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach (var modelo in Model)
-                    {                        
+                    {
                         <tr>
                             <th scope="row">@modelo.Id</th>
                             <td>@modelo.Placa</td>
-                            <td>@modelo.IdModelo</td>
+                            <td>@(modelos.Where(m => m.Id == modelo.IdModelo).First().Modelo)</td>
                             <td>@modelo.DataHoraEntrada</td>
                             <td>@(modelo.DataHoraSaida == null ? "Em aberto" : modelo.DataHoraSaida)</td>
                             <td>
@@ -57,7 +86,7 @@
                                     <button class="btn btn-danger btn-sm mr-2" disabled>Finalizar</button>
                                     <span class="button-separator mr-2">|</span>
                                     <button class="btn btn-primary btn-sm" onclick="imprimir('@modelo.Id')">Imprimir</button>
-                                }                            
+                                }
                             </td>
 
                             <div id="infoModelo-@modelo.Id" style="display: none;">
@@ -71,41 +100,11 @@
                                 }
                                 else
                                 {
-                                <p>Hora saída: @modelo.DataHoraSaida</p>
-                                <p>@String.Format("{0:C}", modelo.Valor)</p>
+                                    <p>Hora saída: @modelo.DataHoraSaida</p>
+                                    <p>@String.Format("{0:C}", modelo.Valor)</p>
                                 }
                             </div>
-                            <div id="scriptContainer" style="display: none;">
-                            <script>
-                                function imprimir(id) {
-
-                                    var infoModelo = document.getElementById('infoModelo-' + id).innerHTML;
-
-                                    var janelaImpressao = window.open('', '_blank');
-
-                                    janelaImpressao.document.write('<html><head><title>Informações do Modelo</title>');
-                                    janelaImpressao.document.write('<style>');
-                                    janelaImpressao.document.write('body { font-family: Arial, sans-serif; text-align: center; }');
-                                    janelaImpressao.document.write('h1 { text-align: center; }');
-                                    janelaImpressao.document.write('</style>');
-                                    janelaImpressao.document.write('</head>');
-                                    janelaImpressao.document.write('<body>');
-                                    janelaImpressao.document.write('<h1>Seja Bem-vindo ao Estacionamento</h1>');
-                                    janelaImpressao.document.write('<h2>Informações do Modelo</h2>');
-                                    janelaImpressao.document.write(infoModelo);
-                                    janelaImpressao.document.write('<h2>Obrigado! Volte sempre...</h2>');
-                                    janelaImpressao.document.write('</body>');
-                                    janelaImpressao.document.write('</html>');
-
-                                    janelaImpressao.print();
-
-                                    janelaImpressao.close();
-                                }
-                            </script>
-                            </div>
-                            
-                            
-                        </tr>                       
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -127,7 +126,6 @@
                     <label for="marca" class="form-control-label">Modelo</label>
                     <select class="form-control" name="idModelo" id="idModelo">
                         @{
-                            var modelos = (List<CarrosModeloModel>)ViewData["Modelo"];
                             foreach (var item in modelos)
                             {
                                 <option value="@item.Id">@item.Modelo</option>
