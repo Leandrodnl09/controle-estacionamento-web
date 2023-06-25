@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Reflection;
 using controle.estacionamento.web.Models;
+using controle.estacionamento.web.Controllers;
 
 namespace BaseControleEstacionamentoWeb.Controllers
 {

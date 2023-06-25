@@ -10,14 +10,16 @@ namespace controle.estacionamento.web.Controllers
 {
     public class HomeController : Controller
     {
+        IConfiguration _config;
         private readonly ILogger<HomeController> _logger;
         HttpClient _httpClient;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration config)
         {
             _logger = logger;
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://localhost:7062");
+            _config = config;
         }
 
         public async Task<IActionResult> Index()
@@ -52,7 +54,10 @@ namespace controle.estacionamento.web.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginAsync(LoginModel model) // Login
         {
-            if (model.Username == "lele" &&  model.Password == "12345")
+            string user = _config.GetSection("Login").GetSection("User").Value;
+            string pass = _config.GetSection("Login").GetSection("Pass").Value;
+
+            if (model.Username == user &&  model.Password == pass)
             {
                 // Defina pelo menos um conjunto de claims
                 var claims = new List<Claim>

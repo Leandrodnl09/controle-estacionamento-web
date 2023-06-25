@@ -116,21 +116,26 @@ namespace controle.estacionamento.web.Controllers
 
         public async Task<IActionResult> Close(int id)
         {
-            var path = $"/finalizarpermanencia/{id}";
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            try
+            {
+                var path = $"/finalizarpermanencia/{id}";
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var messageRequest = new HttpRequestMessage(HttpMethod.Put, path);
+                var messageRequest = new HttpRequestMessage(HttpMethod.Put, path);
 
-            var response = await _httpClient.SendAsync(messageRequest);
+                var response = await _httpClient.SendAsync(messageRequest);
 
-            response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Message = "Ok" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", new { Message = "NOk" });
+            }
         }
-
-
     }
 }
