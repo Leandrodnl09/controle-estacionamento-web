@@ -49,20 +49,28 @@ namespace controle.estacionamento.web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(ControlePermanenciaCarrosModel model)
         {
-            var path = "api/controlepermanencia";
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var messageRequest = new HttpRequestMessage(HttpMethod.Post, path)
+            try
             {
-                Content = JsonContent.Create(model)
-            };
+                var path = "api/controlepermanencia";
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await _httpClient.SendAsync(messageRequest);
+                var messageRequest = new HttpRequestMessage(HttpMethod.Post, path)
+                {
+                    Content = JsonContent.Create(model)
+                };
 
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.SendAsync(messageRequest);
 
-            return RedirectToAction("Index");
+                response.EnsureSuccessStatusCode();
+
+                return RedirectToAction("Index", new { Message = "Ok" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", new { Message = "NOk" });
+            }
+
         }
 
         public async Task<IActionResult> Edit(int id)

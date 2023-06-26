@@ -57,14 +57,20 @@ namespace controle.estacionamento.web.Controllers
             string user = _config.GetSection("Login").GetSection("User").Value;
             string pass = _config.GetSection("Login").GetSection("Pass").Value;
 
-            if (model.Username == user &&  model.Password == pass)
+            if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
+            {
+                ViewBag.ErrorMessage = "Por favor, preencha todos os campos.";
+                return View(model);
+            }
+
+            if (model.Username == user && model.Password == pass)
             {
                 // Defina pelo menos um conjunto de claims
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, model.Username),
-                    new Claim(ClaimTypes.Role, "Administrador"),
-                };
+        {
+            new Claim(ClaimTypes.Name, model.Username),
+            new Claim(ClaimTypes.Role, "Administrador"),
+        };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties
@@ -80,8 +86,11 @@ namespace controle.estacionamento.web.Controllers
                 );
                 return RedirectToAction("Index");
             }
-            return View();
+
+            ViewBag.ErrorMessage = "Usuário ou senha incorretos.";
+            return View(model);
         }
+
 
         public async Task<IActionResult> LogOutAsync()
         {

@@ -122,11 +122,11 @@ else if (alertError)
             <form action="@Url.Action("Create","ControleEstacionamento")" method="post" class="">
                 <div class="form-group">
                     <label for="modelo" class="form-control-label">Placa</label>
-                    <input type="text" id="placa" name="placa" placeholder="Placa do carro..." class="form-control">
+                    <input type="text" id="placa" name="placa" placeholder="Placa do carro..." class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="marca" class="form-control-label">Modelo</label>
-                    <select class="form-control" name="idModelo" id="idModelo">
+                    <select class="form-control" name="idModelo" id="idModelo" required>
                         @{
                             foreach (var item in modelos)
                             {
