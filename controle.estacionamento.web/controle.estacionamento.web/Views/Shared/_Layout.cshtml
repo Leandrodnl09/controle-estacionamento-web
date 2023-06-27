@@ -91,7 +91,7 @@
         </header><!-- /header -->
         <!-- Header-->
 
-        <div class="breadcrumbs">
+        <div class="breadcrumbs align-items-center">
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
@@ -100,8 +100,36 @@
                 </div>
             </div>
             <div class="col-sm-8">
+                <div class="user-area dropdown d-flex align-items-center justify-content-end">
+                    <div class="clock-inline">
+                        <span class="badge text-uppercase font-weight-bold align-middle" style="font-size: 18px; height: 40px; line-height: 40px;" id="clock"></span>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <script>
+            function updateClock() {
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var seconds = now.getSeconds();
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                var time = hours + ":" + minutes + ":" + seconds;
+
+                document.getElementById("clock").innerHTML = time;
+
+                setTimeout(updateClock, 1000);
+            }
+
+            window.onload = function () {
+                updateClock();
+            };
+        </script>
 
         <div class="content mt-3">
             @RenderBody()
@@ -114,7 +142,7 @@
                         <p>&copy; 2023 Sistema Admin. Estacionamento. Todos os direitos reservados.</p>
                     </div>
                     <div class="col-md-6 offset-md-3">
-                        <p>Desenvolvido por <a href="https://github.com/Leandrodnl09">Leandro Di Nardo Lazarin</a></p>
+                        <p>Desenvolvido por <a href="https://github.com/Leandrodnl09" class="blue-link"><strong>Leandro Di Nardo Lazarin</strong></a></p>
                     </div>
                     <div class="col-md-6 offset-md-3">
                         <p>Projeto Final Academia ATOS .NET</a></p>
@@ -123,8 +151,7 @@
             </div>
         </footer>
 
-        
-       <!-- .content -->
+        <!-- .content -->
     </div>
     <!-- /#right-panel -->
 
@@ -133,10 +160,6 @@
     <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/assets/js/main.js"></script>
 
-
-   
 </body>
 
-
 </html>
-
