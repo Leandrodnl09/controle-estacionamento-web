@@ -2,18 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-@{
-    if (Context.User.Identity.IsAuthenticated)
-    {
-        <h1>@Context.User.Identity.Name esta logado!</h1>
-    }
-    else
-    {
-        <h1>Não há nenhum usuário logado!</h1>
-    }
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sua Página</title>
+    <style>
+        body {
+            background-image: url('/images/carroFundo.jpg');
+            background-size: cover; 
+            background-position: center;
+            
+        .display-4 {
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Welcome to the parking control project!</h1>
+    </div>
+</body>
+</html>
