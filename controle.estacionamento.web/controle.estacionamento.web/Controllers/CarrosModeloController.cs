@@ -107,7 +107,6 @@ namespace BaseControleEstacionamentoWeb.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {   
-            // pesquisar o restante do codigo
             try
             {
                 var path = $"api/modelos/{id}";
